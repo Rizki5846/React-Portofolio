@@ -1,0 +1,19 @@
+# Supabase
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# Build
+dist/
+dist-ssr/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

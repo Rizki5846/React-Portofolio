@@ -1,0 +1,49 @@
+/* Existing animations */
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Smooth transition for theme switching */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+}
+
+/* Scrollbar styling yang mengikuti theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track, #1c1c1c);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb, #c87941);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover, #e8935a);
+}
+
+/* Loading spinner */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-color, #2a2a2a);
+  border-top-color: var(--copper, #c87941);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
