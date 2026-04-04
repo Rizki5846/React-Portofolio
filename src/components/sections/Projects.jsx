@@ -1,26 +1,70 @@
-import { useState } from "react";
+import { useState, useEffect } from 'react';
 import { Reveal } from "../ui/Reveal";
-import { ProjectCard } from "../project/ProjectCard";
-import { useProjects } from "../../context/projectContext";
-import { C, spacing, borderRadius } from "../../constants/theme";
+import ProjectCard from "../project/ProjectCard";
+import { useProjects } from "../../context/ProjectContext";
+import { useTheme } from "../../context/themeContext";
+import { TiltCard } from "../ui/TiltCard";
 
 export const Projects = () => {
-  const { projects, loading, filter, setFilter, searchQuery, setSearchQuery } = useProjects();
-  const [showSearch, setShowSearch] = useState(false);
+  const { projects, loading, error, filter, setFilter, searchQuery, setSearchQuery } = useProjects();
+  const { colors } = useTheme();
+  const [viewMode, setViewMode] = useState('grid');
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  // Responsive items per page
+  const [itemsPerPage, setItemsPerPage] = useState(6);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setItemsPerPage(4); // Mobile: 2 baris x 2 kolom
+      } else if (window.innerWidth < 1024) {
+        setItemsPerPage(6); // Tablet: 2 baris x 3 kolom
+      } else {
+        setItemsPerPage(6); // Desktop: 2 baris x 3 kolom
+      }
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const filterOptions = [
-    { value: 'all', label: 'All Projects' },
-    { value: 'Web Dev', label: 'Web Development' },
-    { value: 'IT Support', label: 'IT Support' },
-    { value: 'Mobile Dev', label: 'Mobile Development' },
-    { value: 'Design', label: 'UI/UX Design' },
+    { value: 'all', label: 'All', icon: '📁' },
+    { value: 'Web Dev', label: 'Web', icon: '🌐' },
+    { value: 'IT Support', label: 'IT', icon: '🔧' },
+    { value: 'Mobile Dev', label: 'Mobile', icon: '📱' },
   ];
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+    setCurrentPage(1);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const totalPages = Math.ceil(projects.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentProjects = projects.slice(startIndex, startIndex + itemsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   if (loading) {
     return (
-      <div id="projects" style={{ padding: `80px ${spacing.xl}px`, maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ textAlign: 'center', color: C.muted }}>
-          <div style={styles.loadingSpinner}></div>
+      <div id="projects" style={{ padding: "60px 20px", maxWidth: 1200, margin: "0 auto" }}>
+        <div style={{ textAlign: 'center', color: colors.muted }}>
+          <div className="loading-spinner" style={{ margin: '0 auto 16px' }}></div>
           <p>Loading projects...</p>
         </div>
       </div>
@@ -28,182 +72,316 @@ export const Projects = () => {
   }
 
   return (
-    <div id="projects" style={{ padding: `80px ${spacing.xl}px`, maxWidth: 1200, margin: "0 auto" }}>
-      <Reveal>
-        <div style={styles.header}>
-          <div>
-            <p style={{ fontFamily: C.mono, fontSize: 11, color: C.copper, marginBottom: spacing.sm }}>
-              // projects.filter(p =&gt; p.done)
-            </p>
-            <h2 style={{ fontSize: 28, fontWeight: 700, margin: 0 }}>
-              Featured Projects
-            </h2>
+    <>
+      <div id="projects" style={{ padding: "60px 20px", maxWidth: 1200, margin: "0 auto" }}>
+        <Reveal animation="fadeUp">
+          {/* Header */}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 16,
+            marginBottom: 32,
+          }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
+              flexWrap: 'wrap',
+              gap: 16,
+            }}>
+              <div>
+                <p style={{ fontFamily: colors.mono, fontSize: 11, color: colors.copper, marginBottom: 8 }}>
+                  // featured work
+                </p>
+                <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', fontWeight: 700, margin: 0, color: colors.text }}>
+                  Featured Projects
+                </h2>
+                <p style={{ color: colors.muted, marginTop: 8, fontSize: 'clamp(12px, 3vw, 14px)' }}>
+                  {projects.length} project{projects.length !== 1 ? 's' : ''}
+                </p>
+              </div>
+              
+              <div style={{
+                display: 'flex',
+                gap: 12,
+                flexWrap: 'wrap',
+              }}>
+                {/* Filter */}
+                <select
+                  value={filter}
+                  onChange={(e) => handleFilterChange(e.target.value)}
+                  style={{
+                    background: colors.surface,
+                    border: `1px solid ${colors.border}`,
+                    borderRadius: 8,
+                    padding: '8px 16px',
+                    color: colors.text,
+                    cursor: 'pointer',
+                    fontSize: 'clamp(12px, 3vw, 13px)',
+                    fontFamily: colors.sans,
+                  }}
+                >
+                  {filterOptions.map(opt => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.icon} {opt.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Search */}
+            <div style={{ position: 'relative' }}>
+              <input
+                type="text"
+                placeholder="🔍 Search projects..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                style={{
+                  width: '100%',
+                  padding: '12px 40px 12px 16px',
+                  background: colors.surface,
+                  border: `1px solid ${colors.border}`,
+                  borderRadius: 12,
+                  color: colors.text,
+                  fontSize: 'clamp(13px, 3.5vw, 14px)',
+                  fontFamily: colors.sans,
+                }}
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => {
+                    setSearchQuery('');
+                    setCurrentPage(1);
+                  }}
+                  style={{
+                    position: 'absolute',
+                    right: 12,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: 'none',
+                    border: 'none',
+                    color: colors.muted,
+                    cursor: 'pointer',
+                    fontSize: 16,
+                  }}
+                >
+                  ✕
+                </button>
+              )}
+            </div>
           </div>
           
-          <div style={styles.controls}>
+          {/* Projects Grid */}
+          {currentProjects.length === 0 ? (
+            <div style={{
+              textAlign: 'center',
+              padding: '60px 20px',
+              background: colors.card,
+              borderRadius: 16,
+              border: `1px solid ${colors.border}`,
+            }}>
+              <p style={{ fontSize: 16, marginBottom: 16 }}>No projects found.</p>
+              {(filter !== 'all' || searchQuery) && (
+                <button
+                  onClick={() => {
+                    setFilter('all');
+                    setSearchQuery('');
+                    setCurrentPage(1);
+                  }}
+                  style={{
+                    marginTop: 16,
+                    padding: '8px 24px',
+                    background: colors.copper,
+                    border: 'none',
+                    borderRadius: 8,
+                    color: '#fff',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Clear filters
+                </button>
+              )}
+            </div>
+          ) : (
+            <>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))',
+                gap: 'clamp(16px, 4vw, 24px)',
+                alignItems: 'stretch',
+                marginBottom: 40,
+              }}>
+                {currentProjects.map((project, index) => (
+                  <div 
+                    key={project.id} 
+                    onClick={() => setSelectedProject(project)}
+                    style={{ cursor: 'pointer', height: '100%', display: 'flex' }}
+                  >
+                    <TiltCard maxTilt={5} style={{ width: '100%', height: '100%' }}>
+                      <ProjectCard project={project} index={startIndex + index} />
+                    </TiltCard>
+                  </div>
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 'clamp(8px, 3vw, 16px)',
+                  marginTop: 40,
+                  paddingTop: 20,
+                  borderTop: `1px solid ${colors.border}`,
+                  flexWrap: 'wrap',
+                }}>
+                  <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    style={{
+                      padding: '8px 16px',
+                      background: colors.card,
+                      border: `1px solid ${colors.border}`,
+                      borderRadius: 8,
+                      color: currentPage === 1 ? colors.muted : colors.text,
+                      cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+                      fontSize: 'clamp(12px, 3vw, 13px)',
+                      opacity: currentPage === 1 ? 0.5 : 1,
+                    }}
+                  >
+                    ← Prev
+                  </button>
+                  
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                      <button
+                        key={page}
+                        onClick={() => handlePageChange(page)}
+                        style={{
+                          width: 'clamp(32px, 8vw, 36px)',
+                          height: 'clamp(32px, 8vw, 36px)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          background: currentPage === page ? colors.copper : colors.card,
+                          border: `1px solid ${currentPage === page ? colors.copper : colors.border}`,
+                          borderRadius: 8,
+                          color: currentPage === page ? '#fff' : colors.text,
+                          cursor: 'pointer',
+                          fontSize: 'clamp(12px, 3vw, 13px)',
+                          fontWeight: currentPage === page ? 600 : 400,
+                        }}
+                      >
+                        {page}
+                      </button>
+                    ))}
+                  </div>
+                  
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    style={{
+                      padding: '8px 16px',
+                      background: colors.card,
+                      border: `1px solid ${colors.border}`,
+                      borderRadius: 8,
+                      color: currentPage === totalPages ? colors.muted : colors.text,
+                      cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+                      fontSize: 'clamp(12px, 3vw, 13px)',
+                      opacity: currentPage === totalPages ? 0.5 : 1,
+                    }}
+                  >
+                    Next →
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </Reveal>
+      </div>
+
+      {/* Project Detail Modal - Responsive */}
+      {selectedProject && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.85)',
+          backdropFilter: 'blur(8px)',
+          zIndex: 2000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 'clamp(16px, 5vw, 20px)',
+        }} onClick={() => setSelectedProject(null)}>
+          <div style={{
+            background: colors.card,
+            borderRadius: 20,
+            maxWidth: 'min(90%, 600px)',
+            width: '100%',
+            maxHeight: '85vh',
+            overflowY: 'auto',
+            position: 'relative',
+          }} onClick={(e) => e.stopPropagation()}>
             <button
-              onClick={() => setShowSearch(!showSearch)}
-              style={styles.searchToggle}
+              onClick={() => setSelectedProject(null)}
+              style={{
+                position: 'absolute',
+                top: 16,
+                right: 16,
+                width: 32,
+                height: 32,
+                borderRadius: '50%',
+                background: colors.surface,
+                border: `1px solid ${colors.border}`,
+                color: colors.text,
+                cursor: 'pointer',
+                fontSize: 16,
+                zIndex: 1,
+              }}
             >
-              🔍
+              ✕
             </button>
             
-            <select
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              style={styles.filterSelect}
-            >
-              {filterOptions.map(opt => (
-                <option key={opt.value} value={opt.value}>{opt.label}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-        
-        {showSearch && (
-          <div style={styles.searchBox}>
-            <input
-              type="text"
-              placeholder="Search projects by title or technology..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={styles.searchInput}
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                style={styles.clearSearch}
-              >
-                ✕
-              </button>
-            )}
-          </div>
-        )}
-        
-        {projects.length === 0 ? (
-          <div style={styles.empty}>
-            <p>No projects found.</p>
-            {(filter !== 'all' || searchQuery) && (
-              <button
-                onClick={() => {
-                  setFilter('all');
-                  setSearchQuery('');
-                }}
-                style={styles.resetBtn}
-              >
-                Clear filters
-              </button>
-            )}
-          </div>
-        ) : (
-          <>
-            <div style={styles.stats}>
-              Showing {projects.length} project{projects.length !== 1 ? 's' : ''}
+            <div style={{ textAlign: 'center', padding: '32px 24px 24px', borderBottom: `1px solid ${colors.border}` }}>
+              <span style={{ fontSize: 48 }}>{selectedProject.emoji}</span>
+              <h2 style={{ color: colors.text, marginTop: 16, fontSize: 'clamp(1.3rem, 5vw, 1.8rem)' }}>{selectedProject.title}</h2>
+              <span style={{
+                display: 'inline-block',
+                padding: '4px 12px',
+                background: colors.copper + '20',
+                color: colors.copper,
+                borderRadius: 20,
+                fontSize: 12,
+                marginTop: 12,
+              }}>{selectedProject.type}</span>
             </div>
             
-            <div style={styles.grid}>
-              {projects.map(project => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
+            <div style={{ padding: 24 }}>
+              <h3 style={{ color: colors.copper, marginBottom: 12 }}>Description</h3>
+              <p style={{ color: colors.muted, lineHeight: 1.8 }}>{selectedProject.description}</p>
+              
+              <h3 style={{ color: colors.copper, marginTop: 24, marginBottom: 12 }}>Technologies</h3>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                {selectedProject.tech?.map((tech, i) => (
+                  <span key={i} style={{
+                    padding: '6px 12px',
+                    background: colors.surface,
+                    border: `1px solid ${colors.border}`,
+                    borderRadius: 8,
+                    fontSize: 12,
+                    color: colors.muted,
+                  }}>{tech}</span>
+                ))}
+              </div>
             </div>
-          </>
-        )}
-      </Reveal>
-    </div>
+          </div>
+        </div>
+      )}
+    </>
   );
-};
-
-const styles = {
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-    marginBottom: spacing.xl,
-    flexWrap: 'wrap',
-    gap: spacing.md,
-  },
-  controls: {
-    display: 'flex',
-    gap: spacing.md,
-  },
-  searchToggle: {
-    background: C.card,
-    border: `1px solid ${C.border}`,
-    borderRadius: borderRadius.md,
-    padding: '8px 16px',
-    cursor: 'pointer',
-    fontSize: '16px',
-    transition: 'all 0.2s',
-  },
-  filterSelect: {
-    background: C.card,
-    border: `1px solid ${C.border}`,
-    borderRadius: borderRadius.md,
-    padding: '8px 16px',
-    color: C.text,
-    cursor: 'pointer',
-    fontSize: '13px',
-    fontFamily: C.sans,
-  },
-  searchBox: {
-    marginBottom: spacing.lg,
-    position: 'relative',
-  },
-  searchInput: {
-    width: '100%',
-    padding: '12px 40px 12px 16px',
-    background: C.card,
-    border: `1px solid ${C.border}`,
-    borderRadius: borderRadius.lg,
-    color: C.text,
-    fontSize: '14px',
-    fontFamily: C.sans,
-  },
-  clearSearch: {
-    position: 'absolute',
-    right: '12px',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    background: 'none',
-    border: 'none',
-    color: C.muted,
-    cursor: 'pointer',
-    fontSize: '16px',
-  },
-  stats: {
-    marginBottom: spacing.lg,
-    fontSize: '13px',
-    color: C.muted,
-    textAlign: 'right',
-  },
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
-    gap: spacing.lg,
-  },
-  empty: {
-    textAlign: 'center',
-    padding: spacing.xxl,
-    background: C.card,
-    borderRadius: borderRadius.lg,
-    border: `1px solid ${C.border}`,
-  },
-  resetBtn: {
-    marginTop: spacing.md,
-    padding: '8px 16px',
-    background: C.copper,
-    border: 'none',
-    borderRadius: borderRadius.md,
-    color: '#fff',
-    cursor: 'pointer',
-  },
-  loadingSpinner: {
-    width: '40px',
-    height: '40px',
-    border: `3px solid ${C.border}`,
-    borderTopColor: C.copper,
-    borderRadius: '50%',
-    animation: 'spin 1s linear infinite',
-    margin: '0 auto 16px',
-  },
 };

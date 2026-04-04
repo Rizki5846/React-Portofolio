@@ -1,10 +1,13 @@
 export const skills = {
-  "Web Development": [
+  "Web Development & IoT Dev": [
     { name: "HTML & CSS", level: 85 },
     { name: "JavaScript", level: 75 },
     { name: "React", level: 65 },
-    { name: "PHP / Laravel", level: 60 },
+    { name: "PHP / Laravel", level: 80 },
     { name: "MySQL", level: 70 },
+    { name: "IoT Monitroring", level: 90 },
+    { name: "Mqtt Broker", level: 80 },
+
   ],
   "IT Support": [
     { name: "Troubleshooting Hardware", level: 85 },
@@ -60,8 +63,8 @@ export const navItems = [
 
 export const contactInfo = [
   { ic: "✉️", label: "Email", val: "rizkiardiansyah584@gmail.com", link: "mailto:rizkiardiansyah584@gmail.com" },
-  { ic: "💼", label: "LinkedIn", val: "linkedin.com/in/mrizki", link: "https://linkedin.com/in/mrizki" },
-  { ic: "🐙", label: "GitHub", val: "github.com/mrizki", link: "https://github.com/mrizki" },
+  { ic: "💼", label: "LinkedIn", val: "https://www.linkedin.com/in/rizkiardiansyah02/", link: "https://www.linkedin.com/in/rizkiardiansyah02/" },
+  { ic: "🐙", label: "GitHub", val: "https://github.com/Rizki5846", link: "https://github.com/Rizki5846" },
 ];
 
 export const aboutInfo = {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ThemeProvider } from "./context/themeContext";
-import { ProjectProvider } from "./context/projectContext";
+import { ProjectProvider } from "./context/ProjectContext";
 import { Navbar } from "./components/layout/Navbar";
 import { Footer } from "./components/layout/Footer";
 import { Hero } from "./components/sections/Hero";
@@ -10,6 +10,7 @@ import { Projects } from "./components/sections/Projects";
 import { InteractiveSection } from "./components/sections/InteractiveSection";
 import { Contact } from "./components/sections/Contact";
 import { AdminPanel } from "./components/admin/AdminPanel";
+import { BackToTop } from "./components/ui/BackToTop";
 import { useTheme } from "./context/themeContext";
 import "./styles/animations.css";
 
@@ -34,7 +35,6 @@ function AppContent() {
     }
   };
 
-  // Admin shortcut (Ctrl + Shift + A)
   useEffect(() => {
     const handleKeyPress = (e) => {
       if (e.ctrlKey && e.shiftKey && e.key === 'A') {
@@ -47,7 +47,6 @@ function AppContent() {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, []);
 
-  // Update active section on scroll
   useEffect(() => {
     const sections = ["home", "about", "skills", "projects", "contact"];
     const observerOptions = {
@@ -76,31 +75,42 @@ function AppContent() {
       background: colors.bg, 
       minHeight: "100vh", 
       fontFamily: colors.sans, 
-      color: colors.text 
+      color: colors.text,
+      overflowX: "hidden",
     }}>
       <Navbar activeSection={activeSection} scrollTo={scrollTo} />
       
-      {/* Admin Button */}
+      {/* Admin Button - Responsive */}
       <button
         onClick={() => setShowAdmin(true)}
         style={{
           position: 'fixed',
-          bottom: '20px',
-          right: '20px',
-          width: '40px',
-          height: '40px',
+          bottom: 'clamp(16px, 4vw, 20px)',
+          right: 'clamp(16px, 4vw, 20px)',
+          width: 'clamp(40px, 10vw, 45px)',
+          height: 'clamp(40px, 10vw, 45px)',
           borderRadius: '50%',
           backgroundColor: colors.copper,
           border: 'none',
           color: '#fff',
           cursor: 'pointer',
           zIndex: 99,
-          opacity: 0.5,
-          transition: 'opacity 0.2s',
-          fontSize: '20px',
+          opacity: 0.7,
+          transition: 'all 0.3s ease',
+          fontSize: 'clamp(18px, 5vw, 20px)',
+          boxShadow: colors.shadow,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
-        onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
-        onMouseLeave={(e) => e.currentTarget.style.opacity = '0.5'}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.opacity = '1';
+          e.currentTarget.style.transform = 'scale(1.1)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.opacity = '0.7';
+          e.currentTarget.style.transform = 'scale(1)';
+        }}
         title="Admin Panel (Ctrl+Shift+A)"
       >
         ⚙️
@@ -113,6 +123,7 @@ function AppContent() {
       <InteractiveSection />
       <Contact />
       <Footer />
+      <BackToTop />
       
       {showAdmin && (
         <AdminPanel onClose={() => setShowAdmin(false)} />

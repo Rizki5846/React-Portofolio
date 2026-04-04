@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { C, spacing, borderRadius } from "../../constants/theme";
+import { useTheme } from "../../context/themeContext";
 
-export const ProjectCard = ({ project }) => {
+// Pastikan ini adalah export default, bukan export const
+const ProjectCard = ({ project, index }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { colors } = useTheme();
   const { title, tech, description, type, emoji, color, image_url } = project;
 
   return (
@@ -10,24 +12,48 @@ export const ProjectCard = ({ project }) => {
       onMouseEnter={() => setIsHovered(true)} 
       onMouseLeave={() => setIsHovered(false)} 
       style={{
-        background: isHovered ? "#222" : C.card,
-        border: `1px solid ${isHovered ? C.copper + "55" : C.border}`,
-        borderRadius: borderRadius.xl,
-        transform: isHovered ? "translateY(-5px)" : "translateY(0)",
-        boxShadow: isHovered 
-          ? `0 12px 40px ${C.copper}18, 0 4px 0 #080808` 
-          : "0 4px 0 #080808",
-        transition: "all 0.3s ease", 
-        cursor: "default", 
+        background: isHovered ? colors.surface : colors.card,
+        border: `1px solid ${isHovered ? colors.copper + "55" : colors.border}`,
+        borderRadius: 16,
+        transform: isHovered ? "translateY(-8px)" : "translateY(0)",
+        boxShadow: isHovered ? colors.shadowHover : colors.shadow,
+        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+        cursor: "pointer",
         overflow: "hidden",
+        position: 'relative',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
-      {/* Thumbnail Section */}
+      {/* Badge Index */}
+      <div style={{
+        position: 'absolute',
+        top: 12,
+        left: 12,
+        background: colors.copper,
+        color: '#fff',
+        width: 28,
+        height: 28,
+        borderRadius: '50%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 12,
+        fontWeight: 'bold',
+        zIndex: 2,
+        boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+      }}>
+        {index + 1}
+      </div>
+
+      {/* Thumbnail Section - Fixed Height */}
       <div style={{
         height: 200, 
         position: "relative", 
         overflow: "hidden",
-        background: `linear-gradient(135deg, #181818, #202020)`,
+        background: `linear-gradient(135deg, ${color}22, ${colors.bg})`,
+        flexShrink: 0,
       }}>
         {image_url ? (
           <img 
@@ -37,88 +63,56 @@ export const ProjectCard = ({ project }) => {
               width: '100%',
               height: '100%',
               objectFit: 'cover',
-              transition: 'transform 0.3s ease',
-              transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+              transition: 'transform 0.5s ease',
+              transform: isHovered ? 'scale(1.08)' : 'scale(1)',
             }}
           />
         ) : (
-          <>
-            {/* Grid pattern untuk placeholder */}
-            <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.18 }}>
-              <defs>
-                <pattern id={`g-${title.replace(/\s/g, "")}`} width="24" height="24" patternUnits="userSpaceOnUse">
-                  <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#888" strokeWidth="0.5"/>
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill={`url(#g-${title.replace(/\s/g, "")})`}/>
-            </svg>
-          </>
-        )}
-        
-        {/* Glow Effect */}
-        <div style={{
-          position: "absolute", 
-          inset: 0,
-          background: `radial-gradient(ellipse at 50% 60%, ${color}22, transparent 70%)`,
-          transition: "opacity 0.3s",
-          opacity: isHovered ? 1 : 0.5,
-        }} />
-        
-        {/* Copper Top Bar */}
-        <div style={{
-          position: "absolute", 
-          top: 0, 
-          left: 0, 
-          right: 0, 
-          height: 3,
-          background: isHovered 
-            ? `linear-gradient(90deg, ${C.copper}, ${C.copperLight}, ${C.copper})` 
-            : C.border,
-          transition: "background 0.3s",
-        }} />
-        
-        {/* Icon - tampilkan hanya jika tidak ada gambar */}
-        {!image_url && (
           <div style={{
-            position: "absolute", 
+            position: 'absolute',
             inset: 0,
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            flexDirection: "column", 
-            gap: spacing.sm,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}>
             <div style={{
-              width: 70, 
-              height: 70, 
-              borderRadius: 16,
-              background: `linear-gradient(135deg, ${color}22, ${color}44)`,
-              border: `1px solid ${color}55`,
-              boxShadow: `0 4px 0 #080808, 0 0 24px ${color}33`,
-              display: "flex", 
-              alignItems: "center", 
-              justifyContent: "center",
-              fontSize: 32,
-              transform: isHovered ? "scale(1.1)" : "scale(1)",
-              transition: "transform 0.3s ease",
+              width: 80,
+              height: 80,
+              borderRadius: 20,
+              background: `linear-gradient(135deg, ${color}33, ${color}66)`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: 48,
+              transition: 'transform 0.3s ease',
+              transform: isHovered ? 'scale(1.1)' : 'scale(1)',
             }}>
               {emoji}
             </div>
           </div>
         )}
         
+        {/* Overlay Gradient */}
+        <div style={{
+          position: "absolute", 
+          inset: 0,
+          background: `linear-gradient(to top, ${colors.card} 0%, transparent 50%)`,
+          opacity: isHovered ? 0.8 : 0.6,
+          transition: "opacity 0.3s",
+        }} />
+        
         {/* Type Badge */}
         <span style={{
           position: "absolute", 
-          top: 12, 
+          bottom: 12, 
           right: 12,
-          fontFamily: C.mono, 
+          fontFamily: colors.mono, 
           fontSize: 10, 
-          color: C.copper,
-          border: `1px solid ${C.copper}44`, 
-          borderRadius: borderRadius.sm, 
-          padding: "4px 10px",
-          background: "#0e0e0ecc",
+          color: colors.copper,
+          border: `1px solid ${colors.copper}44`, 
+          borderRadius: 20, 
+          padding: "4px 12px",
+          background: `${colors.bg}cc`,
           backdropFilter: "blur(4px)",
           zIndex: 2,
           fontWeight: 500,
@@ -127,44 +121,107 @@ export const ProjectCard = ({ project }) => {
         </span>
       </div>
 
-      {/* Content Section */}
-      <div style={{ padding: `20px 20px 24px` }}>
-        <h3 style={{ 
-          fontFamily: C.sans, 
-          fontSize: 16, 
-          fontWeight: 600, 
-          color: C.text, 
-          margin: `0 0 ${spacing.sm}px` 
-        }}>
-          {title}
-        </h3>
-        <p style={{ 
-          fontFamily: C.sans, 
-          fontSize: 13, 
-          color: C.muted, 
-          lineHeight: 1.6, 
-          margin: `0 0 ${spacing.md}px` 
-        }}>
-          {description}
-        </p>
+      {/* Content Section - Flexible Height dengan min/max */}
+      <div style={{ 
+        padding: "20px", 
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+      }}>
+        {/* Title - Fixed height area */}
+        <div style={{ minHeight: '65px' }}>
+          <h3 style={{ 
+            fontFamily: colors.sans, 
+            fontSize: 18, 
+            fontWeight: 600, 
+            color: colors.text, 
+            margin: "0 0 8px",
+            lineHeight: 1.3,
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+          }}>
+            {title}
+          </h3>
+        </div>
         
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-          {tech.map(techItem => (
-            <span key={techItem} style={{
-              fontFamily: C.mono, 
-              fontSize: 10, 
-              color: "#999",
-              background: "#1a1a1a", 
-              border: `1px solid ${C.border}`,
-              borderRadius: borderRadius.sm, 
-              padding: "4px 10px", 
-              boxShadow: "0 2px 0 #080808",
-            }}>
-              {techItem}
-            </span>
-          ))}
+        {/* Description - Fixed height area */}
+        <div style={{ minHeight: '80px', marginBottom: 16 }}>
+          <p style={{ 
+            fontFamily: colors.sans, 
+            fontSize: 13, 
+            color: colors.muted, 
+            lineHeight: 1.6, 
+            margin: 0,
+            display: '-webkit-box',
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+          }}>
+            {description}
+          </p>
+        </div>
+        
+        {/* Tech Badges - Auto height dengan min */}
+        <div style={{ 
+          minHeight: '60px',
+          marginBottom: 16,
+        }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {tech && tech.slice(0, 4).map((techItem, i) => (
+              <span key={i} style={{
+                fontFamily: colors.mono, 
+                fontSize: 10, 
+                color: colors.muted,
+                background: colors.surface, 
+                border: `1px solid ${colors.border}`,
+                borderRadius: 6, 
+                padding: "4px 10px", 
+              }}>
+                {techItem}
+              </span>
+            ))}
+            {tech && tech.length > 4 && (
+              <span style={{
+                fontFamily: colors.mono, 
+                fontSize: 10, 
+                color: colors.copper,
+                background: colors.surface, 
+                border: `1px solid ${colors.border}`,
+                borderRadius: 6, 
+                padding: "4px 10px", 
+              }}>
+                +{tech.length - 4} more
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* View Details Link - Fixed at bottom */}
+        <div style={{
+          marginTop: 'auto',
+          paddingTop: 12,
+          borderTop: `1px solid ${colors.border}`,
+          display: 'flex',
+          justifyContent: 'flex-end',
+        }}>
+          <span style={{
+            color: colors.copper,
+            fontSize: 12,
+            fontFamily: colors.mono,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 4,
+            transition: 'gap 0.2s',
+          }}>
+            Click to view details
+            <span style={{ transform: isHovered ? 'translateX(4px)' : 'translateX(0)', transition: 'transform 0.2s' }}>→</span>
+          </span>
         </div>
       </div>
     </div>
   );
 };
+
+export default ProjectCard; // <-- Pastikan ini ada

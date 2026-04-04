@@ -1,25 +1,341 @@
 /* Existing animations */
 @keyframes blink {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 @keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* New animations */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Smooth transition for theme switching */
-* {
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
-/* Scrollbar styling yang mengikuti theme */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(200, 121, 65, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(200, 121, 65, 0.6);
+  }
+}
+
+/* Utility classes */
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+.glow-animation {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.pulse-animation {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(200, 121, 65, 0.3);
+  color: #c87941;
+}
+/* Grid system untuk projects */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* Memastikan semua card dalam grid memiliki height yang sama */
+.projects-grid > * {
+  height: 100%;
+  display: flex;
+}
+
+/* Card wrapper */
+.project-card-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+/* Pagination Styles */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color, #2a2a2a);
+}
+
+.pagination-button {
+  padding: 8px 16px;
+  background: var(--card-bg, #1c1c1c);
+  border: 1px solid var(--border-color, #2a2a2a);
+  border-radius: 8px;
+  color: var(--text-color, #e8e8e8);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background: var(--copper, #c87941);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-numbers {
+  display: flex;
+  gap: 8px;
+}
+
+.page-number {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card-bg, #1c1c1c);
+  border: 1px solid var(--border-color, #2a2a2a);
+  border-radius: 8px;
+  color: var(--text-color, #e8e8e8);
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.page-number:hover:not(.active):not(.dots) {
+  background: var(--surface, #161616);
+  transform: translateY(-2px);
+}
+
+.page-number.active {
+  background: var(--copper, #c87941);
+  color: #fff;
+  border-color: var(--copper, #c87941);
+}
+
+.page-number.dots {
+  cursor: default;
+  background: transparent;
+  border-color: transparent;
+}
+
+/* Responsive pagination */
+@media (max-width: 768px) {
+  .pagination-container {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .pagination-button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .page-number {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+}
+
+/* Base responsive settings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Responsive container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Responsive text */
+h1 {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+}
+
+h3 {
+  font-size: clamp(1.1rem, 4vw, 1.3rem);
+}
+
+p {
+  font-size: clamp(0.875rem, 3vw, 1rem);
+}
+
+/* Responsive grid */
+.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .responsive-grid {
+    gap: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-grid {
+    gap: 30px;
+  }
+}
+
+/* Animations */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Responsive padding */
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 60px 20px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .section-padding {
+    padding: 80px 32px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .section-padding {
+    padding: 100px 40px;
+  }
+}
+
+/* Mobile menu */
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none;
+  }
+  
+  .show-mobile {
+    display: block;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(200, 121, 65, 0.3);
+  color: #c87941;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -36,14 +352,4 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-thumb-hover, #e8935a);
-}
-
-/* Loading spinner */
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid var(--border-color, #2a2a2a);
-  border-top-color: var(--copper, #c87941);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
 }

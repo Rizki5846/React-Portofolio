@@ -12,12 +12,18 @@ export const About = () => {
   ];
 
   return (
-    <div id="about" style={{ padding: "80px 32px", maxWidth: 860, margin: "0 auto" }}>
+    <div id="about" style={{ padding: "60px 20px", maxWidth: 860, margin: "0 auto" }}>
       <Reveal>
-        <div style={{ display: "flex", gap: 40, flexWrap: "wrap", alignItems: "flex-start" }}>
+        <div style={{ 
+          display: "flex", 
+          gap: "clamp(20px, 6vw, 40px)", 
+          flexWrap: "wrap", 
+          alignItems: "flex-start",
+          flexDirection: window.innerWidth < 768 ? "column" : "row",
+        }}>
           <div style={{
-            width: 110, 
-            height: 110, 
+            width: "clamp(80px, 20vw, 110px)", 
+            height: "clamp(80px, 20vw, 110px)", 
             borderRadius: 14, 
             flexShrink: 0,
             background: colors.gradient,
@@ -26,26 +32,32 @@ export const About = () => {
             display: "flex", 
             alignItems: "center", 
             justifyContent: "center", 
-            fontSize: 48,
+            fontSize: "clamp(36px, 10vw, 48px)",
+            margin: "0 auto",
           }}>
             👨‍💻
           </div>
           
-          <div style={{ flex: 1, minWidth: 240 }}>
+          <div style={{ flex: 1, minWidth: "min(100%, 240px)" }}>
             <p style={{ fontFamily: colors.mono, fontSize: 11, color: colors.copper, marginBottom: 8 }}>
               // about_me
             </p>
-            <h2 style={{ fontSize: 22, fontWeight: 700, margin: "0 0 14px", color: colors.text }}>
+            <h2 style={{ fontSize: "clamp(1.3rem, 5vw, 1.8rem)", fontWeight: 700, margin: "0 0 14px", color: colors.text }}>
               Tentang Saya
             </h2>
-            <p style={{ fontSize: 14, color: colors.muted, lineHeight: 1.8, marginBottom: 10 }}>
+            <p style={{ fontSize: "clamp(13px, 3.5vw, 14px)", color: colors.muted, lineHeight: 1.8, marginBottom: 10 }}>
               {aboutInfo.description}
             </p>
-            <p style={{ fontSize: 14, color: colors.muted, lineHeight: 1.8, marginBottom: 20 }}>
+            <p style={{ fontSize: "clamp(13px, 3.5vw, 14px)", color: colors.muted, lineHeight: 1.8, marginBottom: 20 }}>
               {aboutInfo.belief}
             </p>
             
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <div style={{ 
+              display: "flex", 
+              gap: "clamp(8px, 3vw, 12px)", 
+              flexWrap: "wrap",
+              justifyContent: window.innerWidth < 768 ? "center" : "flex-start",
+            }}>
               {infoItems.map(([icon, text]) => (
                 <div key={text} style={{
                   display: "flex", 
@@ -56,9 +68,10 @@ export const About = () => {
                   borderRadius: 7, 
                   padding: "7px 14px",
                   boxShadow: colors.shadow,
+                  flexWrap: "wrap",
                 }}>
-                  <span style={{ fontSize: 14 }}>{icon}</span>
-                  <span style={{ fontFamily: colors.mono, fontSize: 11, color: colors.muted }}>{text}</span>
+                  <span style={{ fontSize: "clamp(12px, 3.5vw, 14px)" }}>{icon}</span>
+                  <span style={{ fontFamily: colors.mono, fontSize: "clamp(10px, 3vw, 11px)", color: colors.muted }}>{text}</span>
                 </div>
               ))}
             </div>
