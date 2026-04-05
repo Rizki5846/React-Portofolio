@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Reveal } from "../ui/Reveal";
 import ProjectCard from "../project/ProjectCard";
-import { useProjects } from "../../context/ProjectContext";
+import { useProjects } from "../../context/projectContext";
 import { useTheme } from "../../context/themeContext";
 import { TiltCard } from "../ui/TiltCard";
 
@@ -9,7 +9,6 @@ export const Projects = () => {
   const { projects, loading, error, filter, setFilter, searchQuery, setSearchQuery } = useProjects();
   const { colors } = useTheme();
   const [viewMode, setViewMode] = useState('grid');
-  const [selectedProject, setSelectedProject] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   
   // Responsive items per page
@@ -214,9 +213,8 @@ export const Projects = () => {
               }}>
                 {currentProjects.map((project, index) => (
                   <div 
-                    key={project.id} 
-                    onClick={() => setSelectedProject(project)}
-                    style={{ cursor: 'pointer', height: '100%', display: 'flex' }}
+                    key={project.id}
+                    style={{ height: '100%', display: 'flex' }}
                   >
                     <TiltCard maxTilt={5} style={{ width: '100%', height: '100%' }}>
                       <ProjectCard project={project} index={startIndex + index} />
@@ -301,87 +299,6 @@ export const Projects = () => {
           )}
         </Reveal>
       </div>
-
-      {/* Project Detail Modal - Responsive */}
-      {selectedProject && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'rgba(0, 0, 0, 0.85)',
-          backdropFilter: 'blur(8px)',
-          zIndex: 2000,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: 'clamp(16px, 5vw, 20px)',
-        }} onClick={() => setSelectedProject(null)}>
-          <div style={{
-            background: colors.card,
-            borderRadius: 20,
-            maxWidth: 'min(90%, 600px)',
-            width: '100%',
-            maxHeight: '85vh',
-            overflowY: 'auto',
-            position: 'relative',
-          }} onClick={(e) => e.stopPropagation()}>
-            <button
-              onClick={() => setSelectedProject(null)}
-              style={{
-                position: 'absolute',
-                top: 16,
-                right: 16,
-                width: 32,
-                height: 32,
-                borderRadius: '50%',
-                background: colors.surface,
-                border: `1px solid ${colors.border}`,
-                color: colors.text,
-                cursor: 'pointer',
-                fontSize: 16,
-                zIndex: 1,
-              }}
-            >
-              ✕
-            </button>
-            
-            <div style={{ textAlign: 'center', padding: '32px 24px 24px', borderBottom: `1px solid ${colors.border}` }}>
-              <span style={{ fontSize: 48 }}>{selectedProject.emoji}</span>
-              <h2 style={{ color: colors.text, marginTop: 16, fontSize: 'clamp(1.3rem, 5vw, 1.8rem)' }}>{selectedProject.title}</h2>
-              <span style={{
-                display: 'inline-block',
-                padding: '4px 12px',
-                background: colors.copper + '20',
-                color: colors.copper,
-                borderRadius: 20,
-                fontSize: 12,
-                marginTop: 12,
-              }}>{selectedProject.type}</span>
-            </div>
-            
-            <div style={{ padding: 24 }}>
-              <h3 style={{ color: colors.copper, marginBottom: 12 }}>Description</h3>
-              <p style={{ color: colors.muted, lineHeight: 1.8 }}>{selectedProject.description}</p>
-              
-              <h3 style={{ color: colors.copper, marginTop: 24, marginBottom: 12 }}>Technologies</h3>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                {selectedProject.tech?.map((tech, i) => (
-                  <span key={i} style={{
-                    padding: '6px 12px',
-                    background: colors.surface,
-                    border: `1px solid ${colors.border}`,
-                    borderRadius: 8,
-                    fontSize: 12,
-                    color: colors.muted,
-                  }}>{tech}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
-};
+};

@@ -46,6 +46,18 @@ export const ProjectList = ({ projects, onEdit, onDelete }) => {
           </div>
           
           <div style={styles.cardFooter}>
+            {project.link ? (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={styles.linkBadge}
+              >
+                🔗 {project.link.length > 45 ? project.link.slice(0, 45) + '...' : project.link}
+              </a>
+            ) : (
+              <span style={styles.noLink}>No project link</span>
+            )}
             <span style={styles.date}>
               Created: {new Date(project.created_at || project.createdAt).toLocaleDateString()}
             </span>
@@ -143,11 +155,36 @@ const styles = {
   },
   cardFooter: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  linkBadge: {
+    fontSize: '11px',
+    color: C.copper,
+    textDecoration: 'none',
+    fontFamily: C.mono,
+    border: `1px solid ${C.copper}33`,
+    borderRadius: borderRadius.sm,
+    padding: '3px 8px',
+    background: `${C.copper}11`,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '60%',
+    display: 'inline-block',
+  },
+  noLink: {
+    fontSize: '11px',
+    color: '#444',
+    fontFamily: C.mono,
+    fontStyle: 'italic',
   },
   date: {
     fontSize: '10px',
     color: '#444',
+    whiteSpace: 'nowrap',
   },
   empty: {
     textAlign: 'center',

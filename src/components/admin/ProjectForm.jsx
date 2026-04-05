@@ -11,6 +11,7 @@ export const ProjectForm = ({ project, onClose, onSuccess }) => {
     type: 'Web Dev',
     emoji: '🚀',
     color: '#3b82f6',
+    link: '',
   });
   const [techInput, setTechInput] = useState('');
   const [imageFile, setImageFile] = useState(null);
@@ -39,6 +40,7 @@ export const ProjectForm = ({ project, onClose, onSuccess }) => {
         type: project.type,
         emoji: project.emoji,
         color: project.color,
+        link: project.link || '',
       });
       setTechInput(project.tech.join(', '));
       if (project.image_url) {
@@ -163,6 +165,22 @@ export const ProjectForm = ({ project, onClose, onSuccess }) => {
                 ))}
               </div>
             )}
+          </div>
+
+          <div style={styles.formGroup}>
+            <label style={styles.label}>🔗 Project Link (URL)</label>
+            <div style={styles.linkInputWrapper}>
+              <span style={styles.linkIcon}>🌐</span>
+              <input
+                type="url"
+                name="link"
+                value={formData.link}
+                onChange={handleChange}
+                style={{ ...styles.input, paddingLeft: '38px' }}
+                placeholder="https://github.com/username/project atau https://project.vercel.app"
+              />
+            </div>
+            <small style={styles.helperText}>Opsional — link ke GitHub repo, live demo, atau website project</small>
           </div>
 
           <div style={styles.formGroup}>
@@ -368,6 +386,18 @@ const styles = {
   },
   imageUpload: {
     marginTop: spacing.xs,
+  },
+  linkInputWrapper: {
+    position: 'relative',
+  },
+  linkIcon: {
+    position: 'absolute',
+    left: 10,
+    top: '50%',
+    transform: 'translateY(-50%)',
+    fontSize: 16,
+    pointerEvents: 'none',
+    zIndex: 1,
   },
   fileInput: {
     display: 'none',

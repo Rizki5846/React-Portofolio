@@ -45,10 +45,10 @@ export const About = () => {
             <h2 style={{ fontSize: "clamp(1.3rem, 5vw, 1.8rem)", fontWeight: 700, margin: "0 0 14px", color: colors.text }}>
               Tentang Saya
             </h2>
-            <p style={{ fontSize: "clamp(13px, 3.5vw, 14px)", color: colors.muted, lineHeight: 1.8, marginBottom: 10 }}>
+            <p style={{ fontSize: "clamp(13px, 3.5vw, 14px)", color: colors.muted, lineHeight: 1.8, marginBottom: 14, textAlign: "justify" }}>
               {aboutInfo.description}
             </p>
-            <p style={{ fontSize: "clamp(13px, 3.5vw, 14px)", color: colors.muted, lineHeight: 1.8, marginBottom: 20 }}>
+            <p style={{ fontSize: "clamp(13px, 3.5vw, 14px)", color: colors.muted, lineHeight: 1.8, marginBottom: 24, textAlign: "justify" }}>
               {aboutInfo.belief}
             </p>
             
@@ -74,6 +74,62 @@ export const About = () => {
                   <span style={{ fontFamily: colors.mono, fontSize: "clamp(10px, 3vw, 11px)", color: colors.muted }}>{text}</span>
                 </div>
               ))}
+            </div>
+
+            {/* Sertifikasi Buttons */}
+            <div style={{ 
+              marginTop: 28, 
+              display: "flex", 
+              gap: "clamp(10px, 3vw, 16px)", 
+              flexWrap: "wrap", 
+              justifyContent: window.innerWidth < 768 ? "center" : "flex-start" 
+            }}>
+              <a 
+                href="/files/Sertifikat_BNSP_Rizki.pdf" 
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "10px 18px",
+                  borderRadius: 8,
+                  fontSize: "clamp(12px, 3.5vw, 13px)",
+                  fontWeight: 600,
+                  color: colors.copper,
+                  background: `${colors.copper}10`,
+                  border: `1px solid ${colors.copper}40`,
+                  textDecoration: "none",
+                  transition: "all 0.2s",
+                }}
+                onMouseOver={(e) => { e.currentTarget.style.background = `${colors.copper}20`; e.currentTarget.style.borderColor = colors.copper; }}
+                onMouseOut={(e) => { e.currentTarget.style.background = `${colors.copper}10`; e.currentTarget.style.borderColor = `${colors.copper}40`; }}
+              >
+                <span>📜</span> Sertifikat BNSP
+              </a>
+              <a 
+                href="/files/Sertifikat_MSIB_Rizki.pdf" 
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "10px 18px",
+                  borderRadius: 8,
+                  fontSize: "clamp(12px, 3.5vw, 13px)",
+                  fontWeight: 600,
+                  color: colors.text,
+                  background: colors.card,
+                  border: `1px solid ${colors.border}`,
+                  textDecoration: "none",
+                  transition: "all 0.2s",
+                }}
+                onMouseOver={(e) => { e.currentTarget.style.borderColor = colors.muted; e.currentTarget.style.color = '#fff'; }}
+                onMouseOut={(e) => { e.currentTarget.style.borderColor = colors.border; e.currentTarget.style.color = colors.text; }}
+              >
+                <span>🎓</span> Sertifikat MSIB
+              </a>
             </div>
           </div>
         </div>

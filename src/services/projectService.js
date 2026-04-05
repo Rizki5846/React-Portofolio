@@ -102,7 +102,8 @@ export const addProject = async (project, imageFile) => {
         type: project.type,
         emoji: project.emoji,
         color: project.color,
-        image_url: imageUrl
+        image_url: imageUrl,
+        link: project.link || null,
       }])
       .select()
       .single();
@@ -150,6 +151,7 @@ export const updateProject = async (id, project, imageFile) => {
         emoji: project.emoji,
         color: project.color,
         image_url: imageUrl,
+        link: project.link || null,
         updated_at: new Date().toISOString()
       })
       .eq('id', id)

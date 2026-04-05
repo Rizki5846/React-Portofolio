@@ -9,7 +9,7 @@ export const C = {
   text: "#e8e8e8",
   muted: "#777777",
   mono: "'JetBrains Mono', 'Courier New', monospace",
-  sans: "'Inter', system-ui, sans-serif",
+  sans: "'Outfit', system-ui, sans-serif",
 };
 
 export const buttonStyles = {

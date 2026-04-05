@@ -119,7 +119,7 @@ export const Hero = ({ scrollTo }) => {
           marginBottom: 14, 
           height: "clamp(20px, 6vw, 24px)" 
         }}>
-          <TypeWriter text="Web Developer  ·  IT Support" speed={55} />
+          <TypeWriter text="IoT Enthusiast  ·  Web Developer  ·  IT Support" speed={55} />
         </div>
         
         {/* Description */}
@@ -131,7 +131,7 @@ export const Hero = ({ scrollTo }) => {
           maxWidth: "min(90%, 480px)",
           textShadow: "0 1px 2px rgba(0,0,0,0.1)",
         }}>
-          Fresh graduate yang bersemangat membangun solusi digital dan memastikan sistem berjalan optimal.
+          Halo! Saya lulusan Teknik Informatika yang antusias menghubungkan solusi digital dengan dunia nyata. Mulai dari merancang aplikasi web modern, bereksperimen dengan perangkat IoT, hingga merawat keandalan infrastruktur IT dari balik layar.
         </p>
         
         {/* CTA Buttons */}

@@ -69,10 +69,10 @@ export const contactInfo = [
 
 export const aboutInfo = {
   name: "Muhamad Rizki Ardiansyah",
-  role: "Web Developer & IT Support",
+  role: "IoT Enthusiast, Web Developer & IT Support",
   education: "S1 Teknik Informatika",
   location: "Cianjur, Indonesia",
   status: "Fresh Graduate",
-  description: "Fresh graduate Teknik Informatika dengan passion di web development dan IT support. Terbiasa bekerja dengan teknologi web modern dan infrastruktur jaringan dasar.",
-  belief: "Saya percaya teknologi yang baik adalah yang dapat diandalkan — baik dari sisi kode maupun infrastruktur."
+  description: "Halo, salam kenal! Saya lulusan Teknik Informatika yang suka mengeksplorasi berbagai hal di dunia teknologi. Di bidang web, saya memiliki pengalaman dari program MSIB Web Development dan kompetensi saya telah divalidasi resmi dengan sertifikasi BNSP sebagai Web Developer. Di luar ngoding website, saya juga asyik bereksperimen dengan perangkat IoT hingga turun langsung mengurus jaringan dan IT Support. Saya menikmati betul setiap tantangannya, apalagi jika solusi yang saya kerjakan bisa ngebantu orang banyak.",
+  belief: "Bagi saya, aplikasi atau alat yang keren itu bukan sekadar kodenya rumit, tapi sistemnya harus gampang dipakai, stabil, dan bisa bener-bener nyelesaiin masalah penggunanya."
 };
