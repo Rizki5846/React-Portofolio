@@ -5,7 +5,7 @@ export const skills = {
     { name: "React", level: 65 },
     { name: "PHP / Laravel", level: 80 },
     { name: "MySQL", level: 70 },
-    { name: "IoT Monitroring", level: 90 },
+    { name: "IoT Monitoring", level: 90 },
     { name: "Mqtt Broker", level: 80 },
 
   ],
@@ -19,37 +19,37 @@ export const skills = {
 };
 
 export const projects = [
-  { 
-    title: "E-Commerce Website", 
-    tech: ["PHP", "MySQL", "Bootstrap"], 
-    desc: "Toko online dengan fitur keranjang belanja, manajemen produk, dan sistem pembayaran dasar.", 
-    type: "Web Dev", 
-    emoji: "🛒", 
-    color: "#3b82f6" 
+  {
+    title: "E-Commerce Website",
+    tech: ["PHP", "MySQL", "Bootstrap"],
+    desc: "Toko online dengan fitur keranjang belanja, manajemen produk, dan sistem pembayaran dasar.",
+    type: "Web Dev",
+    emoji: "🛒",
+    color: "#3b82f6"
   },
-  { 
-    title: "Company Profile Site", 
-    tech: ["React", "Tailwind CSS"], 
-    desc: "Website profil perusahaan responsif dengan animasi modern dan halaman layanan yang informatif.", 
-    type: "Web Dev", 
-    emoji: "🏢", 
-    color: "#8b5cf6" 
+  {
+    title: "Company Profile Site",
+    tech: ["React", "Tailwind CSS"],
+    desc: "Website profil perusahaan responsif dengan animasi modern dan halaman layanan yang informatif.",
+    type: "Web Dev",
+    emoji: "🏢",
+    color: "#8b5cf6"
   },
-  { 
-    title: "Network Setup & Dokumentasi", 
-    tech: ["Cisco Packet Tracer", "Dokumentasi"], 
-    desc: "Perancangan dan konfigurasi jaringan LAN untuk lab kampus dengan topologi star dan VLAN.", 
-    type: "IT Support", 
-    emoji: "🌐", 
-    color: "#10b981" 
+  {
+    title: "Network Setup & Dokumentasi",
+    tech: ["Cisco Packet Tracer", "Dokumentasi"],
+    desc: "Perancangan dan konfigurasi jaringan LAN untuk lab kampus dengan topologi star dan VLAN.",
+    type: "IT Support",
+    emoji: "🌐",
+    color: "#10b981"
   },
-  { 
-    title: "Helpdesk Ticketing System", 
-    tech: ["JavaScript", "LocalStorage"], 
-    desc: "Aplikasi manajemen tiket IT support sederhana untuk mencatat, melacak, dan menyelesaikan isu pengguna.", 
-    type: "Web Dev", 
-    emoji: "🎫", 
-    color: "#f59e0b" 
+  {
+    title: "Helpdesk Ticketing System",
+    tech: ["JavaScript", "LocalStorage"],
+    desc: "Aplikasi manajemen tiket IT support sederhana untuk mencatat, melacak, dan menyelesaikan isu pengguna.",
+    type: "Web Dev",
+    emoji: "🎫",
+    color: "#f59e0b"
   },
 ];
 
@@ -65,6 +65,7 @@ export const contactInfo = [
   { ic: "✉️", label: "Email", val: "rizkiardiansyah584@gmail.com", link: "mailto:rizkiardiansyah584@gmail.com" },
   { ic: "💼", label: "LinkedIn", val: "https://www.linkedin.com/in/rizkiardiansyah02/", link: "https://www.linkedin.com/in/rizkiardiansyah02/" },
   { ic: "🐙", label: "GitHub", val: "https://github.com/Rizki5846", link: "https://github.com/Rizki5846" },
+  { ic: "💬", label: "WhatsApp", val: "+62 85158332699", link: "https://wa.me/6285158332699" },
 ];
 
 export const aboutInfo = {

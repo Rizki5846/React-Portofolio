@@ -8,7 +8,11 @@ export const Skills = () => {
 
   const categoryIcons = {
     "Web Development": "🌐",
+    "Web Development & IoT Dev": "🌐",
+    "IoT": "📡",
     "IT Support": "🔧",
+    "Mobile Dev": "📱",
+    "DevOps": "⚙️",
   };
 
   return (

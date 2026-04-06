@@ -18,26 +18,35 @@ const darkTheme = {
   shadow: "0 4px 0 #080808",
   shadowHover: "0 12px 40px rgba(0,0,0,0.3)",
   gradient: "linear-gradient(135deg, #1e1e1e, #252525)",
+  githubHover: "#ffffff",
 };
 
-// Light theme colors
+// Light theme — Palette #1: Midnight Navy + Electric Blue
+// 🤍 Pure White + 🌑 Navy Midnight + ⚡ Electric Blue
 const lightTheme = {
-  bg: "#f5f5f5",
-  surface: "#ffffff",
+  bg: "#ffffff",
+  surface: "#f8fafc",           // slate-50
   card: "#ffffff",
-  border: "#e0e0e0",
-  copper: "#c87941",
-  copperLight: "#e8935a",
-  copperDim: "#a0623a",
-  text: "#1a1a1a",
-  textSecondary: "#555555",
-  muted: "#888888",
-  mutedLight: "#999999",
+  border: "#e2e8f0",            // slate-200
+  // Electric Blue accent (primary)
+  copper: "#2563eb",            // blue-600
+  copperLight: "#3b82f6",       // blue-500
+  copperDim: "#1d4ed8",         // blue-700
+  // Secondary accent (sky)
+  sky: "#0ea5e9",
+  skyDim: "#0284c7",
+  // Text — slate dark
+  text: "#0f172a",              // slate-900
+  textSecondary: "#1e293b",     // slate-800
+  muted: "#64748b",             // slate-500
+  mutedLight: "#94a3b8",        // slate-400
   mono: "'JetBrains Mono', 'Courier New', monospace",
-  sans: "'Inter', system-ui, sans-serif",
-  shadow: "0 4px 0 #d0d0d0",
-  shadowHover: "0 12px 40px rgba(0,0,0,0.1)",
-  gradient: "linear-gradient(135deg, #f0f0f0, #ffffff)",
+  sans: "'Outfit', 'Inter', system-ui, sans-serif",
+  shadow: "0 4px 0 #cbd5e1",    // slate-300
+  shadowHover: "0 12px 40px rgba(37,99,235,0.12)",
+  gradient: "linear-gradient(135deg, #eff6ff, #f0f9ff)", // blue-50 to sky-50
+  heroOverlay: "rgba(255,255,255,0.55)",
+  githubHover: "#0f172a",
 };
 
 const ThemeContext = createContext();

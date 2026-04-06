@@ -45,26 +45,30 @@ export const KeyboardStrip = () => {
       alignItems: "center", 
       justifyContent: "center",
       padding: "clamp(10px, 3vw, 14px) clamp(12px, 4vw, 20px)", 
-      background: colors.surface,
+      // Container selalu dark agar kontras dengan hero
+      background: "#1a1a1a",
       borderRadius: 10, 
-      border: `1px solid ${colors.border}`,
-      boxShadow: colors.shadow,
+      border: "1px solid #2e2e2e",
+      boxShadow: "0 4px 20px rgba(0,0,0,0.30)",
       flexWrap: "wrap",
       maxWidth: "100%",
       overflowX: "auto",
+      position: "relative",
+      zIndex: 1,
     }}>
       {keys.map((k, i) => (
         <div key={i} style={{
           width: "clamp(28px, 8vw, 36px)", 
           height: "clamp(28px, 8vw, 32px)", 
           borderRadius: 5,
+          // Key menyala → copper | normal → dark gray selalu terlihat
           background: lit === i
-            ? `linear-gradient(180deg, ${colors.copper}cc, ${colors.copperDim})` 
-            : `linear-gradient(180deg, ${colors.card}, ${colors.surface})`,
+            ? `linear-gradient(180deg, ${colors.copper}dd, ${colors.copperDim})`
+            : "linear-gradient(180deg, #303030 0%, #222222 100%)",
           boxShadow: lit === i
-            ? `0 0 12px ${colors.copper}88, 0 3px 0 #080808`
-            : `0 3px 0 #080808, inset 0 1px 0 ${colors.border}`,
-          border: `1px solid ${lit === i ? colors.copper + "55" : colors.border}`,
+            ? `0 0 12px ${colors.copper}88, 0 2px 0 #050505`
+            : "0 2px 0 #080808, inset 0 1px 0 #3a3a3a",
+          border: `1px solid ${lit === i ? colors.copper + "66" : "#333333"}`,
           display: "flex", 
           alignItems: "center", 
           justifyContent: "center",
@@ -74,7 +78,8 @@ export const KeyboardStrip = () => {
           <span style={{ 
             fontFamily: colors.mono, 
             fontSize: "clamp(8px, 2.5vw, 9px)", 
-            color: lit === i ? "#fff" : colors.muted 
+            color: lit === i ? "#fff" : "#888888",
+            fontWeight: 600,
           }}>
             {k.l}
           </span>

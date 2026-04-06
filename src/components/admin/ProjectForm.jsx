@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useProjects } from '../../context/projectContext';
+import { useProjects } from '../../context/ProjectContext';
 import { C, spacing, borderRadius } from '../../constants/theme';
 
 export const ProjectForm = ({ project, onClose, onSuccess }) => {

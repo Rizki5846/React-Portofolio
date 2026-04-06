@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useTheme } from "../../context/themeContext";
 
 export const Keycap = ({ label, sub, size = 1, onClick, active, disabled = false }) => {
-  const { colors } = useTheme();
+  const { colors, theme } = useTheme();
+  const isDark = theme === 'dark';
   const [pressed, setPressed] = useState(false);
   const width = 42 * size + (size - 1) * 4;
 
@@ -15,6 +16,18 @@ export const Keycap = ({ label, sub, size = 1, onClick, active, disabled = false
 
   const isActive = pressed || active;
 
+  // Navbar selalu hitam → keycap selalu pakai dark style
+  const activeStyle = {
+    background: "linear-gradient(180deg, #1e2d45 0%, #0f1f35 100%)",
+    boxShadow: "0 1px 0 #050505, inset 0 1px 3px #00000066",
+    border: `1px solid ${isDark ? colors.copper + "88" : "#2563eb80"}`,
+  };
+  const idleStyle = {
+    background: "linear-gradient(180deg, #1a2a40 0%, #111e30 100%)",
+    boxShadow: "0 3px 0 #040a15, inset 0 1px 0 #1e3050",
+    border: "1px solid #1a2d48",
+  };
+
   return (
     <div
       onClick={handlePress}
@@ -22,13 +35,6 @@ export const Keycap = ({ label, sub, size = 1, onClick, active, disabled = false
         width, 
         height: 44,
         borderRadius: 6,
-        background: isActive
-          ? `linear-gradient(180deg, ${colors.surface} 0%, ${colors.bg} 100%)`
-          : `linear-gradient(180deg, ${colors.card} 0%, ${colors.surface} 100%)`,
-        boxShadow: isActive
-          ? `0 1px 0 #0a0a0a, inset 0 1px 3px #00000055`
-          : `${colors.shadow}, inset 0 1px 0 ${colors.border}`,
-        border: `1px solid ${active ? colors.copper + "88" : colors.border}`,
         cursor: disabled ? "not-allowed" : "pointer",
         display: "flex", 
         flexDirection: "column",
@@ -40,13 +46,13 @@ export const Keycap = ({ label, sub, size = 1, onClick, active, disabled = false
         position: "relative", 
         overflow: "hidden",
         opacity: disabled ? 0.5 : 1,
+        ...(isActive ? activeStyle : idleStyle),
       }}
     >
+      {/* Shine overlay */}
       <div style={{
         position: "absolute", 
-        top: 0, 
-        left: 0, 
-        right: 0, 
+        top: 0, left: 0, right: 0, 
         height: "45%",
         background: "linear-gradient(180deg, #ffffff08 0%, transparent 100%)",
         borderRadius: "5px 5px 0 0", 
@@ -55,9 +61,12 @@ export const Keycap = ({ label, sub, size = 1, onClick, active, disabled = false
       <span style={{ 
         fontFamily: colors.mono, 
         fontSize: 11, 
-        color: active ? colors.copper : colors.text, 
+        // Active: copper (dark) atau electric blue (light) | Idle: abu-abu terang
+        color: active
+          ? (isDark ? colors.copper : "#60a5fa")
+          : "#aaaaaa",
         lineHeight: 1, 
-        fontWeight: 600 
+        fontWeight: active ? 700 : 600,
       }}>
         {label}
       </span>
@@ -65,8 +74,8 @@ export const Keycap = ({ label, sub, size = 1, onClick, active, disabled = false
         <span style={{ 
           fontFamily: colors.mono, 
           fontSize: 8, 
-          color: colors.muted, 
-          marginTop: 2 
+          color: "#555555",
+          marginTop: 2,
         }}>
           {sub}
         </span>

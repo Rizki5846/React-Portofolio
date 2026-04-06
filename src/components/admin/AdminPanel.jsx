@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useProjects } from '../../context/projectContext';
+import { useProjects } from '../../context/ProjectContext';
 import { ProjectForm } from './ProjectForm';
 import { ProjectList } from './ProjectList';
 import { C, spacing, borderRadius } from '../../constants/theme';

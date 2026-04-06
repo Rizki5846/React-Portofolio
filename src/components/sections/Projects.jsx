@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Reveal } from "../ui/Reveal";
 import ProjectCard from "../project/ProjectCard";
-import { useProjects } from "../../context/projectContext";
+import { useProjects } from "../../context/ProjectContext";
 import { useTheme } from "../../context/themeContext";
 import { TiltCard } from "../ui/TiltCard";
 

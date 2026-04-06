@@ -1,9 +1,17 @@
+import { useState, useEffect } from "react";
 import { Reveal } from "../ui/Reveal";
 import { useTheme } from "../../context/themeContext";
 import { aboutInfo } from "../../constants/data";
 
 export const About = () => {
   const { colors } = useTheme();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   const infoItems = [
     ["🎓", aboutInfo.education],
@@ -19,7 +27,7 @@ export const About = () => {
           gap: "clamp(20px, 6vw, 40px)", 
           flexWrap: "wrap", 
           alignItems: "flex-start",
-          flexDirection: window.innerWidth < 768 ? "column" : "row",
+          flexDirection: isMobile ? "column" : "row",
         }}>
           <div style={{
             width: "clamp(80px, 20vw, 110px)", 
@@ -56,7 +64,7 @@ export const About = () => {
               display: "flex", 
               gap: "clamp(8px, 3vw, 12px)", 
               flexWrap: "wrap",
-              justifyContent: window.innerWidth < 768 ? "center" : "flex-start",
+              justifyContent: isMobile ? "center" : "flex-start",
             }}>
               {infoItems.map(([icon, text]) => (
                 <div key={text} style={{
@@ -82,7 +90,7 @@ export const About = () => {
               display: "flex", 
               gap: "clamp(10px, 3vw, 16px)", 
               flexWrap: "wrap", 
-              justifyContent: window.innerWidth < 768 ? "center" : "flex-start" 
+              justifyContent: isMobile ? "center" : "flex-start" 
             }}>
               <a 
                 href="/files/Sertifikat_BNSP_Rizki.pdf" 
@@ -125,7 +133,7 @@ export const About = () => {
                   textDecoration: "none",
                   transition: "all 0.2s",
                 }}
-                onMouseOver={(e) => { e.currentTarget.style.borderColor = colors.muted; e.currentTarget.style.color = '#fff'; }}
+                onMouseOver={(e) => { e.currentTarget.style.borderColor = colors.copper; e.currentTarget.style.color = colors.copper; }}
                 onMouseOut={(e) => { e.currentTarget.style.borderColor = colors.border; e.currentTarget.style.color = colors.text; }}
               >
                 <span>🎓</span> Sertifikat MSIB
