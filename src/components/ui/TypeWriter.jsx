@@ -1,4 +1,4 @@
-import { useTypeWriter } from "../../hooks/UseTypeWriter";
+import { useTypeWriter } from "../../hooks/useTypeWriter";
 import { C } from "../../constants/theme";
 
 export const TypeWriter = ({ text, speed = 60, color, onComplete }) => {

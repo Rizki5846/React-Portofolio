@@ -1,4 +1,4 @@
-import { useScrollReveal } from "../../hooks/UseScrollReveal";
+import { useScrollReveal } from "../../hooks/useScrollReveal";
 
 export const Reveal = ({ children, style = {}, threshold = 0.1, delay = 0 }) => {
   const { ref, isVisible } = useScrollReveal(threshold);

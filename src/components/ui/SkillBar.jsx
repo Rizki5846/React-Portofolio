@@ -1,4 +1,4 @@
-import { useScrollReveal } from "../../hooks/UseScrollReveal";
+import { useScrollReveal } from "../../hooks/useScrollReveal";
 import { useTheme } from "../../context/themeContext";
 
 export const SkillBar = ({ name, level }) => {
