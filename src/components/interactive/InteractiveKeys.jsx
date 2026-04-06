@@ -18,9 +18,52 @@ export const InteractiveKeys = () => {
   };
 
   return (
-    <div style={{ textAlign: "center" }}>
+    <div style={{ textAlign: "center", width: "100%", overflowX: "hidden" }}>
+      <style>
+        {`
+          .interactive-key-row {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin-bottom: 5px;
+          }
+          .interactive-key {
+            width: 38px;
+            height: 38px;
+          }
+          .interactive-space {
+            width: 240px;
+            height: 36px;
+          }
+          .offset-0 { margin-left: 0; }
+          .offset-1 { margin-left: 12px; }
+          .offset-2 { margin-left: 24px; }
+          
+          @media (max-width: 480px) {
+            .interactive-key-row { gap: 3px; }
+            .interactive-key { 
+              width: clamp(26px, 8vw, 38px); 
+              height: clamp(32px, 10vw, 38px); 
+            }
+            .interactive-key span { 
+              font-size: clamp(9px, 3.5vw, 12px) !important; 
+            }
+            .interactive-space { 
+              width: clamp(160px, 60vw, 240px); 
+            }
+            .offset-1 { margin-left: clamp(6px, 4vw, 12px); }
+            .offset-2 { margin-left: clamp(12px, 8vw, 24px); }
+            .interactive-display {
+              font-size: 12px !important;
+              padding: 10px 14px !important;
+              letter-spacing: 1px !important;
+            }
+          }
+        `}
+      </style>
+
       {/* Display Screen */}
-      <div style={{
+      <div className="interactive-display" style={{
         background: "#0d0d0d", 
         border: `1px solid ${C.border}`,
         borderRadius: borderRadius.lg, 
@@ -34,39 +77,37 @@ export const InteractiveKeys = () => {
         alignItems: "center",
         boxShadow: "inset 0 2px 8px #00000088",
         letterSpacing: 2,
+        maxWidth: "100%",
+        overflow: "hidden"
       }}>
-        <span style={{ color: C.muted, marginRight: 10, fontSize: 11 }}>
+        <span style={{ color: C.muted, marginRight: 8, fontSize: 11, flexShrink: 0 }}>
           &gt;
         </span>
-        {typed || <span style={{ color: "#444", fontSize: 12 }}>ketik sesuatu...</span>}
+        <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+          {typed || <span style={{ color: "#444", fontSize: 12 }}>ketik sesuatu...</span>}
+        </span>
         <span style={{ 
           animation: "blink 1s infinite", 
           marginLeft: 1, 
-          color: C.copper 
+          color: C.copper,
+          flexShrink: 0
         }}>
           ▌
         </span>
       </div>
       
       {/* Keyboard */}
-      <div style={{ display: "inline-block" }}>
+      <div style={{ display: "inline-block", maxWidth: "100%" }}>
         {KEY_ROWS.map((row, rowIndex) => (
-          <div key={rowIndex} style={{
-            display: "flex", 
-            gap: 5, 
-            justifyContent: "center",
-            marginBottom: 5, 
-            marginLeft: rowIndex * 12,
-          }}>
+          <div key={rowIndex} className={`interactive-key-row offset-${rowIndex}`}>
             {row.map(key => {
               const isPressed = pressed[key];
               return (
                 <div 
                   key={key} 
+                  className="interactive-key"
                   onClick={() => pressKey(key)} 
                   style={{
-                    width: 38, 
-                    height: 38, 
                     borderRadius: borderRadius.md,
                     background: isPressed
                       ? `linear-gradient(180deg, ${C.copperDim}, #1a1a1a)`
@@ -98,12 +139,11 @@ export const InteractiveKeys = () => {
         ))}
         
         {/* Space Bar */}
-        <div style={{ display: "flex", gap: 5, justifyContent: "center", marginTop: 5 }}>
+        <div className="interactive-key-row" style={{ marginTop: 5 }}>
           <div 
+            className="interactive-space"
             onClick={handleSpacePress} 
             style={{
-              width: 240, 
-              height: 36, 
               borderRadius: borderRadius.md,
               background: "linear-gradient(180deg, #2b2b2b, #202020)",
               boxShadow: "0 4px 0 #080808, 0 5px 0 #060606, inset 0 1px 0 #363636",
