@@ -15,6 +15,7 @@ import { AdminPanel } from "./components/admin/AdminPanel";
 import { LoginModal } from "./components/admin/LoginModal";
 import { BackToTop } from "./components/ui/BackToTop";
 import { CustomCursor } from "./components/ui/CustomCursor";
+import { NotFound } from "./components/ui/NotFound";
 import { useTheme } from "./context/themeContext";
 import "./styles/animations.css";
 
@@ -24,6 +25,22 @@ function AppContent() {
   const [activeSection, setActiveSection] = useState("home");
   const [showAdmin, setShowAdmin] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+    // Basic route listener for popstate (in case of back/forward navigation)
+    window.addEventListener("popstate", () => setCurrentPath(window.location.pathname));
+    return () => window.removeEventListener("popstate", () => setCurrentPath(window.location.pathname));
+  }, []);
+
+  if (currentPath !== "/" && currentPath !== "/index.html") {
+    return (
+      <div style={{ background: colors.bg, minHeight: "100vh", fontFamily: colors.sans, color: colors.text, cursor: "none" }}>
+        <CustomCursor />
+        <NotFound />
+      </div>
+    );
+  }
 
   const scrollTo = (id) => {
     const element = document.getElementById(id);
