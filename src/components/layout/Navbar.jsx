@@ -2,9 +2,11 @@ import { useState } from "react";
 import { KeyboardNav } from "../navigation/KeyboardNav";
 import { ThemeToggle } from "../ui/ThemeToggle";
 import { useTheme } from "../../context/themeContext";
+import { useHonest } from "../../context/honestContext";
 
 export const Navbar = ({ activeSection, scrollTo }) => {
   const { colors, theme } = useTheme();
+  const { isHonest, toggleHonest } = useHonest();
   const isDark = theme === 'dark';
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -131,7 +133,29 @@ export const Navbar = ({ activeSection, scrollTo }) => {
             </a>
           </div>
 
-          <ThemeToggle />
+          <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+            {/* Honest Toggle */}
+            <button
+              onClick={toggleHonest}
+              title={isHonest ? "Kembali Profesional" : "Mode Jujur"}
+              style={{
+                background: isHonest ? "rgba(239, 68, 68, 0.15)" : "transparent",
+                border: `1px solid ${isHonest ? "#ef4444" : "#555555"}`,
+                borderRadius: 8,
+                color: isHonest ? "#ef4444" : "#e8e8e8",
+                fontSize: 14,
+                cursor: "pointer",
+                padding: "6px 10px",
+                transition: "all 0.2s",
+                display: "flex",
+                alignItems: "center",
+                gap: 5
+              }}
+            >
+              {isHonest ? "🎭 Jujur" : "👔 Pro"}
+            </button>
+            <ThemeToggle />
+          </div>
           
           {/* Mobile Menu Button */}
           <button

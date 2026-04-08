@@ -39,12 +39,12 @@ export const Hero = ({ scrollTo }) => {
   };
 
   return (
-    <div id="home" style={{ 
-      minHeight: "100vh", 
-      display: "flex", 
-      flexDirection: "column", 
-      alignItems: "center", 
-      justifyContent: "center", 
+    <div id="home" style={{
+      minHeight: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
       padding: "80px 20px 40px",
       gap: "clamp(30px, 8vw, 48px)",
       position: "relative",
@@ -62,7 +62,7 @@ export const Hero = ({ scrollTo }) => {
         opacity: isDark ? 0.15 : 0.70,
         zIndex: 0,
       }} />
-      
+
       {/* Overlay — indigo→sky tint, tidak menutupi gambar sepenuhnya */}
       <div style={{
         position: "absolute",
@@ -93,86 +93,86 @@ export const Hero = ({ scrollTo }) => {
       )}
 
       {/* Content */}
-      <div style={{ 
-        textAlign: "center", 
-        maxWidth: "min(90%, 680px)", 
-        position: "relative", 
-        zIndex: 1 
+      <div style={{
+        textAlign: "center",
+        maxWidth: "min(90%, 680px)",
+        position: "relative",
+        zIndex: 1
       }}>
         {/* Status Badge */}
         <div style={{
-          display: "inline-flex", 
-          alignItems: "center", 
+          display: "inline-flex",
+          alignItems: "center",
           gap: 8,
-          fontFamily: colors.mono, 
-          fontSize: "clamp(10px, 3vw, 11px)", 
+          fontFamily: colors.mono,
+          fontSize: "clamp(10px, 3vw, 11px)",
           color: colors.copper,
-          border: `1px solid ${colors.copper}44`, 
+          border: `1px solid ${colors.copper}44`,
           borderRadius: 6,
-          padding: "5px 14px", 
-          marginBottom: "clamp(20px, 5vw, 28px)", 
+          padding: "5px 14px",
+          marginBottom: "clamp(20px, 5vw, 28px)",
           background: `${colors.copper}0f`,
           backdropFilter: "blur(8px)",
         }}>
-          <span style={{ 
-            width: 7, height: 7, borderRadius: "50%", 
-            background: "#4ade80", boxShadow: "0 0 8px #4ade8088", 
-            display: "inline-block" 
+          <span style={{
+            width: 7, height: 7, borderRadius: "50%",
+            background: "#4ade80", boxShadow: "0 0 8px #4ade8088",
+            display: "inline-block"
           }} />
           Open to Work
         </div>
-        
+
         {/* H1 */}
         <h1 style={{
-          fontSize: "clamp(1.8rem, 8vw, 3.5rem)", 
+          fontSize: "clamp(1.8rem, 8vw, 3.5rem)",
           fontWeight: 800,
-          lineHeight: 1.2, 
+          lineHeight: 1.2,
           margin: "0 0 14px",
           // Dark: gradient white→indigo | Light: solid deep slate (reliable)
           ...(isDark
             ? {
-                background: `linear-gradient(135deg, ${colors.text} 40%, #818cf8)`,
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                color: "transparent",
-              }
+              background: `linear-gradient(135deg, ${colors.text} 40%, #818cf8)`,
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              color: "transparent",
+            }
             : {
-                color: "#0f172a",
-                WebkitTextFillColor: "#0f172a",
-              }
+              color: "#0f172a",
+              WebkitTextFillColor: "#0f172a",
+            }
           ),
           filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.08))",
         }}>
           Muhamad Rizki<br />Ardiansyah
         </h1>
-        
+
         {/* TypeWriter */}
-        <div style={{ 
-          fontSize: "clamp(12px, 4vw, 14px)", 
-          marginBottom: 14, 
+        <div style={{
+          fontSize: "clamp(12px, 4vw, 14px)",
+          marginBottom: 14,
           height: "clamp(20px, 6vw, 24px)",
           color: colors.muted,
         }}>
           <TypeWriter text="IoT Enthusiast  ·  Web Developer  ·  IT Support" speed={55} />
         </div>
-        
+
         {/* Description */}
-        <p style={{ 
-          fontSize: "clamp(13px, 3.5vw, 14px)", 
-          color: colors.muted, 
-          lineHeight: 1.8, 
-          margin: "0 auto 36px", 
+        <p style={{
+          fontSize: "clamp(13px, 3.5vw, 14px)",
+          color: colors.muted,
+          lineHeight: 1.8,
+          margin: "0 auto 36px",
           maxWidth: "min(90%, 480px)",
         }}>
           Halo! Saya lulusan Teknik Informatika yang antusias menghubungkan solusi digital dengan dunia nyata. Mulai dari merancang aplikasi web modern, bereksperimen dengan perangkat IoT, hingga merawat keandalan infrastruktur IT dari balik layar.
         </p>
-        
+
         {/* CTA Buttons */}
-        <div style={{ 
-          display: "flex", 
-          gap: "clamp(10px, 4vw, 14px)", 
-          justifyContent: "center", 
+        <div style={{
+          display: "flex",
+          gap: "clamp(10px, 4vw, 14px)",
+          justifyContent: "center",
           flexWrap: "wrap",
           padding: "0 10px",
         }}>
@@ -181,12 +181,12 @@ export const Hero = ({ scrollTo }) => {
             onClick={() => scrollTo("projects")}
             style={{
               background: `linear-gradient(135deg, ${colors.copper}, ${colors.copperLight})`,
-              border: "none", 
-              borderRadius: 8, 
+              border: "none",
+              borderRadius: 8,
               padding: "clamp(10px, 3vw, 12px) clamp(20px, 5vw, 28px)",
-              color: "#fff", 
-              fontWeight: 600, 
-              fontSize: "clamp(12px, 3.5vw, 14px)", 
+              color: "#fff",
+              fontWeight: 600,
+              fontSize: "clamp(12px, 3.5vw, 14px)",
               cursor: "pointer",
               boxShadow: `0 4px 0 ${colors.copperDim}, 0 6px 20px ${colors.copper}33`,
               transition: "transform 0.1s, box-shadow 0.1s",
@@ -237,25 +237,25 @@ export const Hero = ({ scrollTo }) => {
             }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
             </svg>
             Download CV
           </a>
-          
+
           {/* Tertiary — Outline */}
           <button
             onClick={() => scrollTo("contact")}
             style={{
               background: "none",
-              border: `1px solid ${colors.border}`, 
-              borderRadius: 8, 
+              border: `1px solid ${colors.border}`,
+              borderRadius: 8,
               padding: "clamp(10px, 3vw, 12px) clamp(20px, 5vw, 28px)",
-              color: colors.text, 
-              fontSize: "clamp(12px, 3.5vw, 14px)", 
+              color: colors.text,
+              fontSize: "clamp(12px, 3.5vw, 14px)",
               cursor: "pointer",
-              fontFamily: colors.sans, 
+              fontFamily: colors.sans,
               boxShadow: colors.shadow,
               transition: "transform 0.1s, box-shadow 0.1s",
               whiteSpace: "nowrap",
@@ -274,11 +274,11 @@ export const Hero = ({ scrollTo }) => {
       </div>
 
       <KeyboardStrip />
-      
-      <div style={{ 
-        fontFamily: colors.mono, 
-        fontSize: "clamp(10px, 3vw, 11px)", 
-        color: colors.muted, 
+
+      <div style={{
+        fontFamily: colors.mono,
+        fontSize: "clamp(10px, 3vw, 11px)",
+        color: colors.muted,
         animation: "blink 2s infinite",
         position: "relative",
         zIndex: 1,

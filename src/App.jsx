@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "./context/themeContext";
+import { HonestProvider } from "./context/honestContext";
 import { ProjectProvider } from "./context/ProjectContext";
 import { AuthProvider, useAuth } from "./context/authContext";
 import { Navbar } from "./components/layout/Navbar";
@@ -10,6 +11,7 @@ import { About } from "./components/sections/About";
 import { Skills } from "./components/sections/Skills";
 import { Projects } from "./components/sections/Projects";
 import { InteractiveSection } from "./components/sections/InteractiveSection";
+import { Guestbook } from "./components/sections/Guestbook";
 import { Contact } from "./components/sections/Contact";
 import { AdminPanel } from "./components/admin/AdminPanel";
 import { LoginModal } from "./components/admin/LoginModal";
@@ -77,7 +79,7 @@ function AppContent() {
 
   // Scroll observer
   useEffect(() => {
-    const sections = ["home", "about", "skills", "projects", "contact"];
+    const sections = ["home", "about", "skills", "projects", "guestbook", "contact"];
     const observerOptions = {
       rootMargin: "-62px 0px 0px 0px",
       threshold: 0.3,
@@ -193,6 +195,7 @@ function AppContent() {
       <Skills />
       <Projects />
       <InteractiveSection />
+      <Guestbook />
       <Contact />
       <Footer />
       <BackToTop />
@@ -216,12 +219,14 @@ function AppContent() {
 function App() {
   return (
     <ThemeProvider>
-      <AuthProvider>
-        <ProjectProvider>
-          <AppContent />
-          <Analytics />
-        </ProjectProvider>
-      </AuthProvider>
+      <HonestProvider>
+        <AuthProvider>
+          <ProjectProvider>
+            <AppContent />
+            <Analytics />
+          </ProjectProvider>
+        </AuthProvider>
+      </HonestProvider>
     </ThemeProvider>
   );
 }
